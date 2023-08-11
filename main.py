@@ -26,19 +26,22 @@ class TwitchBot(commands.Bot):
       client_id = cid,  # Twitch Client ID - Secret
       nick = '악질봇',  # Bot's Twitch Nick
       prefix = '!',  # Bot Command Start emoji
-      initial_channels = ['마야100']  # Streamer's Name for Bot's Tracking
+      initial_channels = ['heart0331']  # Streamer's Name for Bot's Tracking
     )
 
   # MEssage Event Method -> when msg comes
   async def event_message(self, message):
+    # If message author is None, skip handling.
+    if message.author is None:
+        return
+
     # Run Func when receive message
     await self.handle_commands(message)
 
   async def check_permissions(self, ctx):
-    broadcaster = ctx.channel.is_broadcaster(ctx.author)  # Check Streamer Permission
-    moderator = ctx.channel.is_moderator(ctx.author)  # Check Manager Permission
+    broadcaster = ctx.author.is_broadcaster or ctx.author.is_mod  # Check if either Streamer or Moderator.
 
-    if broadcaster or moderator:
+    if broadcaster:
       return True
     else:
       await ctx.send("명령어 사용 권한이 없습니다.")
@@ -62,7 +65,7 @@ class TwitchBot(commands.Bot):
   async def event_clearchat(self, params):
     user = params['target_user']
     timeouts[user] += 1
-    channel = self.get_channel('마야100')  # Replace with the name of the streamer's channel you want to track timeouts
+    channel = self.get_channel('heart0331')  # Replace with the name of the streamer's channel you want to track timeouts
     await channel.send(f"{user}게이야...넌 나가라")
 
 
