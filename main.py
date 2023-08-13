@@ -1,8 +1,3 @@
-# Default Code Made By 4rNe5
-# This Code is MIT Licence.
-# My Github : @4rNe5
-# About 4rne5 : 4rne5.kro.kr
-
 import json
 from twitchio.ext import commands
 from collections import defaultdict
@@ -22,11 +17,11 @@ class TwitchBot(commands.Bot):
 
   def __init__(self):
     super().__init__(
-      token = token,  # Twitch OAuth Token - Secret
-      client_id = cid,  # Twitch Client ID - Secret
-      nick = '악질봇',  # Bot's Twitch Nick
-      prefix = '!',  # Bot Command Start emoji
-      initial_channels = ['heart0331']  # Streamer's Name for Bot's Tracking
+      token=token,  # Twitch OAuth Token - Secret
+      client_id=cid,  # Twitch Client ID - Secret
+      nick='악질봇',  # Bot's Twitch Nick
+      prefix='!',  # Bot Command Start emoji
+      initial_channels=['heart0331']  # Streamer's Name for Bot's Tracking
     )
 
   # MEssage Event Method -> when msg comes
@@ -62,11 +57,12 @@ class TwitchBot(commands.Bot):
     await ctx.send(response)
 
   # define timeout tracking event method
-  async def event_clearchat(self, params):
-    user = params['target_user']
+  async def event_clearchat(self, data):
+    user = data.target_user
     timeouts[user] += 1
     channel = self.get_channel('heart0331')  # Replace with the name of the streamer's channel you want to track timeouts
     await channel.send(f"{user}게이야...넌 나가라")
+
 
 
 # Bot Run
